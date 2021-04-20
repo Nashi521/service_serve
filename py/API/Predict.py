@@ -1,8 +1,8 @@
 import tensorflow as tf
 import pandas as pd
 
-inputfile1='API.xlsx'
-inputfile2=''
+inputfile1='py\API\API.xlsx'
+inputfile2='excel\\test3.xlsx'
 data = pd.read_excel(inputfile1,index='Date',sheet_name=0)
 data_train_feature = data.loc[0:780,['智能识别','产业经济','电子商务','商品信息','短信API','企业综合','企业工商','银行卡核验','车辆信息','智能风控','天气查询','经营管理'
           ,'身份核验','知识产权','app应用','快递查询','舆情监测','IP地址','手机号验证','海关进出口','智能客服','1分钱','司法','银行卡信息',
@@ -24,6 +24,8 @@ data_predict=data_input.loc[:,['智能识别','产业经济','电子商务','商
 
 data_predict=(data_predict-mean)/std
 
-model=tf.keras.models.load_model('API.h5')
+model=tf.keras.models.load_model('py\API\API.h5')
 
-result=model.predict()
+result=model.predict(data_predict)
+
+print(result)
