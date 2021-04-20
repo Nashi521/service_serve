@@ -1,8 +1,8 @@
 import tensorflow as tf
 import pandas as pd
 
-inputfile1='Datapacket.xlsx'
-inputfile2='../../excel/test1.xlsx'
+inputfile1='py\Datapacket\Datapacket.xlsx'
+inputfile2='excel\\test1.xlsx'
 data = pd.read_excel(inputfile1,index='Date',sheet_name=0)
 data_train_feature = data.loc[0:1050,['数据大小','数据类型','数据格式','位置地图','新闻资讯','舆情监测','产业经济','市内交通','智能客服','企业工商'
           ,'企业图谱','自然灾害','智能识别','电子商务','企业综合','环境质量','投融资','商品信息','市场调研','公路铁路','经营管理','公告文书',
@@ -19,9 +19,9 @@ data_predict=data_input.loc[:,['数据大小','数据类型','数据格式','位
 
 data_predict=(data_predict-mean)/std
 
-model=tf.keras.models.load_model('Datapacket.h5')
+model=tf.keras.models.load_model('py\Datapacket\Datapacket.h5')
 
-result=model.predict()
+result=model.predict(data_predict)
 
 print(result)
 
