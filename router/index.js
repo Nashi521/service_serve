@@ -59,9 +59,11 @@ router.post("/1", async (ctx) => {
 
   let workProcess = cp.exec( "python ./py/Datapacket/Predict.py", (error, stdout, stderr) => {
       if (error) {
-        console.log(error);
+        console.error(`执行的错误: ${error}`);
+        return;
       }
-      console.log(stdout);
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
     }
   );
   workProcess.on("exit", (code) => {
