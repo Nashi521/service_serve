@@ -57,7 +57,7 @@ router.post("/1", async (ctx) => {
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test1.xlsx", buffer, { flag: "w" });
 
-  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
+  let workProcess = cp.exec( "python ./py/Datapacket/Predict.py", (error, stdout, stderr) => {
       if (error) {
         console.log(error);
       }
