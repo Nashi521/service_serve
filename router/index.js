@@ -57,20 +57,10 @@ router.post("/1", async (ctx) => {
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test1.xlsx", buffer, { flag: "w" });
 
-  let workProcess = cp.exec("python ./py/Datapacket/Predict.py", (error, stdout, stderr) => {
-    if (error) {
-      console.error(`执行的错误: ${error}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-    
-    ctx.body = stdout;
-  }
-  );
-  workProcess.on("exit", (code) => {
-    console.log("子进程退出，退出码" + code);
-  });
-
+  let result = cp.execSync("python ./py/Datapacket/Predict.py");
+  
+  console.log(result.toString())
+  ctx.body = result.toString();
 });
 
 router.post("/2", async (ctx) => {
