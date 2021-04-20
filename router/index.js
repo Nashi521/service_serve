@@ -57,20 +57,20 @@ router.post("/1", async (ctx) => {
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test1.xlsx", buffer, { flag: "w" });
 
-  let workProcess = cp.exec( "python ./py/Datapacket/Predict.py", (error, stdout, stderr) => {
-      if (error) {
-        console.error(`执行的错误: ${error}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-      console.error(`stderr: ${stderr}`);
+  let workProcess = cp.exec("python ./py/Datapacket/Predict.py", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`执行的错误: ${error}`);
+      return;
     }
+    console.log(`stdout: ${stdout}`);
+    
+    ctx.body = stdout;
+  }
   );
   workProcess.on("exit", (code) => {
     console.log("子进程退出，退出码" + code);
   });
 
-  ctx.body = "1 success";
 });
 
 router.post("/2", async (ctx) => {
@@ -111,12 +111,13 @@ router.post("/2", async (ctx) => {
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test2.xlsx", buffer, { flag: "w" });
 
-  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
-      if (error) {
-        console.log(error);
-      }
-      console.log(stdout);
+  let workProcess = cp.exec("python ./py/image.py", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`执行的错误: ${error}`);
+      return;
     }
+    console.log(`stdout: ${stdout}`);
+  }
   );
   workProcess.on("exit", (code) => {
     console.log("子进程退出，退出码" + code);
@@ -211,12 +212,13 @@ router.post("/3", async (ctx) => {
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test3.xlsx", buffer, { flag: "w" });
 
-  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
-      if (error) {
-        console.log(error);
-      }
-      console.log(stdout);
+  let workProcess = cp.exec("python ./py/image.py", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`执行的错误: ${error}`);
+      return;
     }
+    console.log(`stdout: ${stdout}`);
+  }
   );
   workProcess.on("exit", (code) => {
     console.log("子进程退出，退出码" + code);
@@ -230,7 +232,8 @@ router.post('/uploadfile', async (ctx, next) => {
   const file = ctx.request.files.file; // 获取上传文件
   // 创建可读流
   const reader = fs.createReadStream(file.path);
-  let filePath = `./excel/test1.xlsx`;
+  console.log(file.name)
+  let filePath = `./excel/${file.name}`;
   // 创建可写流
   const upStream = fs.createWriteStream(filePath);
   // 可读流通过管道写入可写流
