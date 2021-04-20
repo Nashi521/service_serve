@@ -1,5 +1,6 @@
 const Router = require("koa-router");
 const fs = require("fs");
+const cp = require("child_process");
 const xlsx = require("node-xlsx");
 
 const router = new Router();
@@ -55,6 +56,18 @@ router.post("/1", async (ctx) => {
 
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test1.xlsx", buffer, { flag: "w" });
+
+  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log(stdout);
+    }
+  );
+  workProcess.on("exit", (code) => {
+    console.log("子进程退出，退出码" + code);
+  });
+
   ctx.body = "1 success";
 });
 
@@ -95,6 +108,18 @@ router.post("/2", async (ctx) => {
 
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test2.xlsx", buffer, { flag: "w" });
+
+  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log(stdout);
+    }
+  );
+  workProcess.on("exit", (code) => {
+    console.log("子进程退出，退出码" + code);
+  });
+
   ctx.body = "2 success";
 });
 
@@ -183,6 +208,18 @@ router.post("/3", async (ctx) => {
 
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test3.xlsx", buffer, { flag: "w" });
+
+  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log(stdout);
+    }
+  );
+  workProcess.on("exit", (code) => {
+    console.log("子进程退出，退出码" + code);
+  });
+
   ctx.body = "3 success";
 });
 
