@@ -57,16 +57,16 @@ router.post("/1", async (ctx) => {
   //将文件内容插入新的文件中
   fs.writeFileSync("./excel/test1.xlsx", buffer, { flag: "w" });
 
-  let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
-      if (error) {
-        console.log(error);
-      }
-      console.log(stdout);
-    }
-  );
-  workProcess.on("exit", (code) => {
-    console.log("子进程退出，退出码" + code);
-  });
+  // let workProcess = cp.exec( "python ./py/image.py", (error, stdout, stderr) => {
+  //     if (error) {
+  //       console.log(error);
+  //     }
+  //     console.log(stdout);
+  //   }
+  // );
+  // workProcess.on("exit", (code) => {
+  //   console.log("子进程退出，退出码" + code);
+  // });
 
   ctx.body = "1 success";
 });
