@@ -7,6 +7,7 @@ deploy.js
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 /tests/**/coverage/
+/excel/*
 
 # local env files
 .env.local
