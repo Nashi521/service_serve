@@ -2,6 +2,7 @@ const Router = require("koa-router");
 const fs = require("fs");
 const cp = require("child_process");
 const xlsx = require("node-xlsx");
+const { resolve } = require("path");
 
 const router = new Router();
 
@@ -58,7 +59,7 @@ router.post("/1", async (ctx) => {
   fs.writeFileSync("./excel/test1.xlsx", buffer, { flag: "w" });
 
   let result = cp.execSync("python ./py/Datapacket/Predict.py");
-  
+
   console.log(result.toString())
   ctx.body = result.toString();
 });
@@ -102,7 +103,7 @@ router.post("/2", async (ctx) => {
   fs.writeFileSync("./excel/test2.xlsx", buffer, { flag: "w" });
 
   let result = cp.execSync("python ./py/Datareport/Predict.py");
-  
+
   console.log(result.toString())
   ctx.body = result.toString();
 });
@@ -194,7 +195,7 @@ router.post("/3", async (ctx) => {
   fs.writeFileSync("./excel/test3.xlsx", buffer, { flag: "w" });
 
   let result = cp.execSync("python ./py/API/Predict.py");
-  
+
   console.log(result.toString())
   ctx.body = result.toString();
 });
@@ -202,58 +203,43 @@ router.post("/3", async (ctx) => {
 router.post('/uploadfile/1', async (ctx, next) => {
   // 上传单个文件
   const file = ctx.request.files.file; // 获取上传文件
-  // 创建可读流
-  const reader = fs.createReadStream(file.path);
-  console.log(file.name)
-  let filePath = `./excel/test1.xlsx`;
-  // 创建可写流
-  const upStream = fs.createWriteStream(filePath);
-  // 可读流通过管道写入可写流
-  reader.pipe(upStream);
+
+  const fd = fs.readFileSync(file.path);
+  let filePath = `./excel/test2.xlsx`;
+  fs.writeFileSync(filePath, fd);
 
   let result = cp.execSync("python ./py/Datapacket/Predict.py");
-  
   console.log(result.toString())
-  ctx.body = result.toString();
+  
+  ctx.body = result.toString()
 });
 
 router.post('/uploadfile/2', async (ctx, next) => {
   // 上传单个文件
   const file = ctx.request.files.file; // 获取上传文件
-  // 创建可读流
-  const reader = fs.createReadStream(file.path);
-  console.log(file.name)
+
+  const fd = fs.readFileSync(file.path);
   let filePath = `./excel/test2.xlsx`;
-  // 创建可写流
-  const upStream = fs.createWriteStream(filePath);
-  // 可读流通过管道写入可写流
-  reader.pipe(upStream);
+  fs.writeFileSync(filePath, fd);
 
-  upStream.on('finish', () => {
-    ctx.body = "finish";
-  });
-
-  // let result = cp.execSync("python ./py/Datareport/Predict.py");
+  let result = cp.execSync("python ./py/Datareport/Predict.py");
+  console.log(result.toString())
   
-  // console.log(result.toString())
+  ctx.body = result.toString()
 });
 
 
 router.post('/uploadfile/3', async (ctx, next) => {
   // 上传单个文件
   const file = ctx.request.files.file; // 获取上传文件
-  // 创建可读流
-  const reader = fs.createReadStream(file.path);
-  console.log(file.name)
-  let filePath = `./excel/test3.xlsx`;
-  // 创建可写流
-  const upStream = fs.createWriteStream(filePath);
-  // 可读流通过管道写入可写流
-  reader.pipe(upStream);
+
+  const fd = fs.readFileSync(file.path);
+  let filePath = `./excel/test2.xlsx`;
+  fs.writeFileSync(filePath, fd);
 
   let result = cp.execSync("python ./py/API/Predict.py");
-  
   console.log(result.toString())
-  ctx.body = result.toString();
+  
+  ctx.body = result.toString()
 });
 module.exports = router;
