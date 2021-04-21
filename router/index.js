@@ -229,10 +229,13 @@ router.post('/uploadfile/2', async (ctx, next) => {
   // 可读流通过管道写入可写流
   reader.pipe(upStream);
 
-  let result = cp.execSync("python ./py/Datareport/Predict.py");
+  upStream.on('finish', () => {
+    ctx.body = "finish";
+  });
+
+  // let result = cp.execSync("python ./py/Datareport/Predict.py");
   
-  console.log(result.toString())
-  ctx.body = result.toString();
+  // console.log(result.toString())
 });
 
 
